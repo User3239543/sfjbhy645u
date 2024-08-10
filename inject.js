@@ -1,26 +1,26 @@
 let replacements = {};
 
 function addReplacement(replacement, code, replaceit) {
-	replacements[replacement] = [code, replaceit];
+    replacements[replacement] = [code, replaceit];
 }
 
 function modifyCode(text) {
-	for(const [replacement, code] of Object.entries(replacements)){
-		text = text.replaceAll(replacement, code[1] ? code[0] : replacement + code[0]);
-	}
-	var newScript = document.createElement("script");
-	newScript.type = "module";
-	newScript.crossOrigin = "";
-	newScript.textContent = text;
-	var head = document.querySelector("head");
-	head.appendChild(newScript);
+    for (const [replacement, code] of Object.entries(replacements)) {
+        text = text.replaceAll(replacement, code[1] ? code[0] : replacement + code[0]);
+    }
+    var newScript = document.createElement("script");
+    newScript.type = "module";
+    newScript.crossOrigin = "";
+    newScript.textContent = text;
+    var head = document.querySelector("head");
+    head.appendChild(newScript);
 }
 
 (function() {
-	'use strict';
+    'use strict';
 
-	// PRE
-	addReplacement('document.addEventListener("DOMContentLoaded",startGame,!1);', `
+    // PRE
+    addReplacement('document.addEventListener("DOMContentLoaded",startGame,!1);', `
 		setTimeout(function() {
 			var DOMContentLoaded_event = document.createEvent("Event");
 			DOMContentLoaded_event.initEvent("DOMContentLoaded", true, true);
@@ -28,7 +28,7 @@ function modifyCode(text) {
 		}, 0);
 	`);
 
-	addReplacement('PotionHelper.potionAmplifiers.set(Potions.jump.getId(),"5");', `
+    addReplacement('PotionHelper.potionAmplifiers.set(Potions.jump.getId(),"5");', `
 		let blocking = false;
 		let sendYaw = false;
 
@@ -61,22 +61,22 @@ function modifyCode(text) {
 		});
 	`);
 
-	addReplacement('VERSION$1," | ",', '"Vape V4 v1.0.2"," | ",');
+    addReplacement('VERSION$1," | ",', '"Glorified v1.0.3"," | ",');
 
-	// DRAWING SETUP
-	addReplacement('ut(this,"glintTexture");', `
+    // DRAWING SETUP
+    addReplacement('ut(this,"glintTexture");', `
 		ut(this, "vapeTexture");
 		ut(this, "v4Texture");
 	`);
-	addReplacement('this.gltfManager.loadModels()', ',this.loadVape()');
-	addReplacement('ShaderManager.addShaderToMaterialWorld(this.materialTransparentWorld)}', `
+    addReplacement('this.gltfManager.loadModels()', ',this.loadVape()');
+    addReplacement('ShaderManager.addShaderToMaterialWorld(this.materialTransparentWorld)}', `
 		async loadVape() {
 			this.vapeTexture = await this.loader.loadAsync("https://raw.githubusercontent.com/7GrandDadPGN/VapeForMiniblox/main/assets/logo.png");
-			this.v4Texture = await this.loader.loadAsync("https://raw.githubusercontent.com/7GrandDadPGN/VapeForMiniblox/main/assets/logov4.png");
+			this.v4Texture = await this.loader.loadAsync("https://github.com/User3239543/sfjbhy645u/blob/main/GLORIFIED.png");
 		}
 	`);
 
-	addReplacement('COLOR_TOOLTIP_BG,BORDER_SIZE)}', `
+    addReplacement('COLOR_TOOLTIP_BG,BORDER_SIZE)}', `
 		function drawImage(ctx, img, posX, posY, sizeX, sizeY, color) {
 			if(color != undefined) {
 				ctx.fillStyle = color;
@@ -88,8 +88,8 @@ function modifyCode(text) {
 		}
 	`);
 
-	// TEXT GUI
-	addReplacement('(this.drawSelectedItemStack(),this.drawHintBox())', `
+    // TEXT GUI
+    addReplacement('(this.drawSelectedItemStack(),this.drawHintBox())', `
 		if(ctx$3 != undefined)
 		{
 			const colorOffset = (Date.now() / 4000);
@@ -122,19 +122,19 @@ function modifyCode(text) {
 		}
 	`);
 
-	// HOOKS
-	addReplacement('+=$*rt+_*nt}', `
+    // HOOKS
+    addReplacement('+=$*rt+_*nt}', `
 		if (this == player$1)
 		{
 			for(const [index, func] of Object.entries(tickLoop)) if(func) func();
 		}
 	`);
-	addReplacement('this.game.unleash.isEnabled("disable-ads")', 'true', true);
-	addReplacement('$.render()})', '; for(const [index, func] of Object.entries(renderTickLoop)) if(func) func();');
-	addReplacement('updateNameTag(){let$="white",et = 1;', 'this.entity.team = this.entity.profile.cosmetics.color;');
-	addReplacement('connect(_,$=!1,et=!1){', 'lastJoined = _;');
-	addReplacement('SliderOption("Render Distance ",2,8,3)', 'SliderOption("Render Distance ",2,64,3)', true);
-	addReplacement('ClientSocket.on("CPacketDisconnect",$=>{', `
+    addReplacement('this.game.unleash.isEnabled("disable-ads")', 'true', true);
+    addReplacement('$.render()})', '; for(const [index, func] of Object.entries(renderTickLoop)) if(func) func();');
+    addReplacement('updateNameTag(){let$="white",et = 1;', 'this.entity.team = this.entity.profile.cosmetics.color;');
+    addReplacement('connect(_,$=!1,et=!1){', 'lastJoined = _;');
+    addReplacement('SliderOption("Render Distance ",2,8,3)', 'SliderOption("Render Distance ",2,64,3)', true);
+    addReplacement('ClientSocket.on("CPacketDisconnect",$=>{', `
 		if(enabledModules["AutoRejoin"])
 		{
 			setTimeout(function() {
@@ -142,7 +142,7 @@ function modifyCode(text) {
 			}, 400);
 		}
 	`);
-	addReplacement('ClientSocket.on("CPacketMessage",$=>{', `
+    addReplacement('ClientSocket.on("CPacketMessage",$=>{', `
 		if(player$1 != undefined && $.text && !$.text.startsWith(player$1.name) && enabledModules["ChatDisabler"] && chatDelay < Date.now())
 		{
 			chatDelay = Date.now() + 1000;
@@ -153,7 +153,7 @@ function modifyCode(text) {
 			}, 50);
 		}
 	`);
-	addReplacement('ClientSocket.on("CPacketUpdateStatus",$=>{', `
+    addReplacement('ClientSocket.on("CPacketUpdateStatus",$=>{', `
 		if($.rank != null && $.rank != "" && RANK.LEVEL[$.rank].permLevel > 2)
 		{
 			game$1.chat.addChat({
@@ -163,22 +163,22 @@ function modifyCode(text) {
 		}
 	`);
 
-	// REBIND
-	addReplacement('bindKeysWithDefaults("b",j=>{', 'bindKeysWithDefaults("semicolon",j=>{', true);
-	addReplacement('bindKeysWithDefaults("i",j=>{', 'bindKeysWithDefaults("apostrophe",j=>{', true);
+    // REBIND
+    addReplacement('bindKeysWithDefaults("b",j=>{', 'bindKeysWithDefaults("semicolon",j=>{', true);
+    addReplacement('bindKeysWithDefaults("i",j=>{', 'bindKeysWithDefaults("apostrophe",j=>{', true);
 
-	// SPRINT
-	addReplacement('at=keyPressedPlayer("shift")||touchcontrols.sprinting', '||enabledModules["Sprint"]');
+    // SPRINT
+    addReplacement('at=keyPressedPlayer("shift")||touchcontrols.sprinting', '||enabledModules["Sprint"]');
 
-	// VELOCITY
-	addReplacement('"CPacketEntityVelocity",$=>{const et=j.world.entities.get($.id);', `
+    // VELOCITY
+    addReplacement('"CPacketEntityVelocity",$=>{const et=j.world.entities.get($.id);', `
 		if(player$1 && $.id == player$1.id && enabledModules["Velocity"])
 		{
 			if(velocityhori[1] == 0 && velocityvert[1] == 0) return;
 			$.motion = new Vector3$1($.motion.x * velocityhori[1], $.motion.y * velocityvert[1], $.motion.z * velocityhori[1]);
 		}
 	`);
-	addReplacement('"CPacketExplosion",$=>{', `
+    addReplacement('"CPacketExplosion",$=>{', `
 		if($.playerPos != null && enabledModules["Velocity"])
 		{
 			if(velocityhori[1] == 0 && velocityvert[1] == 0) return;
@@ -186,8 +186,8 @@ function modifyCode(text) {
 		}
 	`);
 
-	// KEEPSPRINT
-	addReplacement('tt>0&&($.addVelocity(-Math.sin(this.yaw)*tt*.5,.1,-Math.cos(this.yaw)*tt*.5),this.motion.x*=.6,this.motion.z*=.6,this.setSprinting(!1)),', `
+    // KEEPSPRINT
+    addReplacement('tt>0&&($.addVelocity(-Math.sin(this.yaw)*tt*.5,.1,-Math.cos(this.yaw)*tt*.5),this.motion.x*=.6,this.motion.z*=.6,this.setSprinting(!1)),', `
 		if(tt > 0)
 		{
 			$.addVelocity(-Math.sin(this.yaw) * tt * .5, .1, -Math.cos(this.yaw) * tt * .5);
@@ -200,48 +200,48 @@ function modifyCode(text) {
 		}
 	`, true);
 
-	// KILLAURA
-	addReplacement('else player$1.isBlocking()?', 'else (player$1.isBlocking() || blocking)?', true);
-	addReplacement('this.entity.isBlocking()', '(this.entity.isBlocking() || this.entity == player$1 && blocking)', true);
-	addReplacement('const nt={onGround:this.onGround}', `, realYaw = sendYaw || this.yaw`);
-	addReplacement('this.yaw-this.lastReportedYaw!==0', 'realYaw-this.lastReportedYaw!==0', true);
-	addReplacement('nt.yaw=player.yaw', 'nt.yaw=realYaw', true);
-	addReplacement('this.lastReportedYaw=this.yaw', 'this.lastReportedYaw=realYaw', true);
-	addReplacement('this.neck.rotation.y=controls$1.yaw', 'this.neck.rotation.y=(sendYaw||controls$1.yaw)', true);
+    // KILLAURA
+    addReplacement('else player$1.isBlocking()?', 'else (player$1.isBlocking() || blocking)?', true);
+    addReplacement('this.entity.isBlocking()', '(this.entity.isBlocking() || this.entity == player$1 && blocking)', true);
+    addReplacement('const nt={onGround:this.onGround}', `, realYaw = sendYaw || this.yaw`);
+    addReplacement('this.yaw-this.lastReportedYaw!==0', 'realYaw-this.lastReportedYaw!==0', true);
+    addReplacement('nt.yaw=player.yaw', 'nt.yaw=realYaw', true);
+    addReplacement('this.lastReportedYaw=this.yaw', 'this.lastReportedYaw=realYaw', true);
+    addReplacement('this.neck.rotation.y=controls$1.yaw', 'this.neck.rotation.y=(sendYaw||controls$1.yaw)', true);
 
-	// NOSLOWDOWN
-	addReplacement('const $=this.jumping,et=this.sneak,tt=-.8,rt=this.moveForward<=tt;', `
+    // NOSLOWDOWN
+    addReplacement('const $=this.jumping,et=this.sneak,tt=-.8,rt=this.moveForward<=tt;', `
 		const slowdownCheck = this.isUsingItem() && !enabledModules["NoSlowdown"];
 	`);
-	addReplacement('updatePlayerMoveState(),this.isUsingItem()', 'updatePlayerMoveState(),slowdownCheck', true);
-	addReplacement('it&&!this.isUsingItem()', 'it&&!slowdownCheck', true);
-	addReplacement('0),this.sneak', ' && !enabledModules["NoSlowdown"]');
+    addReplacement('updatePlayerMoveState(),this.isUsingItem()', 'updatePlayerMoveState(),slowdownCheck', true);
+    addReplacement('it&&!this.isUsingItem()', 'it&&!slowdownCheck', true);
+    addReplacement('0),this.sneak', ' && !enabledModules["NoSlowdown"]');
 
-	// NOFALL
-	addReplacement('={onGround:this.onGround}', '={onGround:this.onGround&&!enabledModules["NoFall"]}', true);
+    // NOFALL
+    addReplacement('={onGround:this.onGround}', '={onGround:this.onGround&&!enabledModules["NoFall"]}', true);
 
-	// WTAP
-	addReplacement('this.dead||this.getHealth()<=0)return;', `
+    // WTAP
+    addReplacement('this.dead||this.getHealth()<=0)return;', `
 		attackedEntity = $;
 		attackTime = Date.now();
 	`);
 
-	// FASTBREAK
-	addReplacement('_&&player$1.mode.isCreative()', `||enabledModules["FastBreak"]`);
+    // FASTBREAK
+    addReplacement('_&&player$1.mode.isCreative()', `||enabledModules["FastBreak"]`);
 
-	// INVWALK
-	addReplacement('keyPressed(j)&&Game.isActive(!1)', 'keyPressed(j)&&(Game.isActive(!1)||enabledModules["InvWalk"]&&!game.chat.showInput)', true);
+    // INVWALK
+    addReplacement('keyPressed(j)&&Game.isActive(!1)', 'keyPressed(j)&&(Game.isActive(!1)||enabledModules["InvWalk"]&&!game.chat.showInput)', true);
 
-	// AUTORESPAWN
-	addReplacement('showDeathScreen=!0,exitPointerLock())', `
+    // AUTORESPAWN
+    addReplacement('showDeathScreen=!0,exitPointerLock())', `
 		if(this.showDeathScreen && enabledModules["AutoRespawn"])
 		{
 			ClientSocket.sendPacket(new SPacketRespawn$1);
 		}
 	`);
 
-	// CHAMS
-	addReplacement(')&&(et.mesh.visible=this.shouldRenderEntity(et))', `
+    // CHAMS
+    addReplacement(')&&(et.mesh.visible=this.shouldRenderEntity(et))', `
 		if(enabledModules["Chams"] && et != undefined && et.id != player$1.id)
 		{
 			for(const mesh in et.mesh.meshes)
@@ -274,8 +274,8 @@ function modifyCode(text) {
 		}
 	`);
 
-	// SKIN
-	addReplacement('ClientSocket.on("CPacketSpawnPlayer",$=>{const et=j.world.getPlayerById($.id);', `
+    // SKIN
+    addReplacement('ClientSocket.on("CPacketSpawnPlayer",$=>{const et=j.world.getPlayerById($.id);', `
 		if($.socketId === player$1.socketId && enabledModules["AntiBan"])
 		{
 			hud3D.remove(hud3D.rightArm);
@@ -285,9 +285,9 @@ function modifyCode(text) {
 			$.cosmetics.cape = "GrandDad";
 		}
 	`);
-	addReplacement('bob:{id:"bob",name:"Bob",tier:0,skinny:!1},', 'GrandDad:{id:"GrandDad",name:"GrandDad",tier:2,skinny:!1},');
-	addReplacement('cloud:{id:"cloud",name:"Cloud",tier:2},', 'GrandDad:{id:"GrandDad",name:"GrandDad",tier:2},');
-	addReplacement('async downloadSkin(_){', `
+    addReplacement('bob:{id:"bob",name:"Bob",tier:0,skinny:!1},', 'GrandDad:{id:"GrandDad",name:"GrandDad",tier:2,skinny:!1},');
+    addReplacement('cloud:{id:"cloud",name:"Cloud",tier:2},', 'GrandDad:{id:"GrandDad",name:"GrandDad",tier:2},');
+    addReplacement('async downloadSkin(_){', `
 		if (_ == "GrandDad")
 		{
 			const $ = skins[_];
@@ -306,7 +306,7 @@ function modifyCode(text) {
 			})
 		}
 	`);
-	addReplacement('async downloadCape(_){', `
+    addReplacement('async downloadCape(_){', `
 		if (_ == "GrandDad")
 		{
 			const $ = capes[_];
@@ -328,25 +328,25 @@ function modifyCode(text) {
 		}
 	`);
 
-	// LOGIN BYPASS
-	addReplacement('new SPacketLoginStart({requestedUuid:localStorage.getItem(REQUESTED_UUID_KEY)??void 0,session:localStorage.getItem(SESSION_TOKEN_KEY)??"",hydration:localStorage.getItem("hydration")??"0",metricsId:localStorage.getItem("metrics_id")??"",clientVersion:VERSION$1})', 'new SPacketLoginStart({requestedUuid:void 0,session:(enabledModules["AntiBan"] ? "" : (localStorage.getItem(SESSION_TOKEN_KEY) ?? "")),hydration:"0",metricsId:"",clientVersion:VERSION$1})', true);
+    // LOGIN BYPASS
+    addReplacement('new SPacketLoginStart({requestedUuid:localStorage.getItem(REQUESTED_UUID_KEY)??void 0,session:localStorage.getItem(SESSION_TOKEN_KEY)??"",hydration:localStorage.getItem("hydration")??"0",metricsId:localStorage.getItem("metrics_id")??"",clientVersion:VERSION$1})', 'new SPacketLoginStart({requestedUuid:void 0,session:(enabledModules["AntiBan"] ? "" : (localStorage.getItem(SESSION_TOKEN_KEY) ?? "")),hydration:"0",metricsId:"",clientVersion:VERSION$1})', true);
 
-	// TELEPORT FIX
-	addReplacement('this.setPosition(this.pos),this.setRotation(this.yaw,this.pitch)', `
+    // TELEPORT FIX
+    addReplacement('this.setPosition(this.pos),this.setRotation(this.yaw,this.pitch)', `
 		if(player$1 != undefined && this.id == player$1.id) player$1.sendPositionAndRotation();
 	`);
-	addReplacement('this.setPosition(_, $, et),this.setRotation(tt, rt);', `
+    addReplacement('this.setPosition(_, $, et),this.setRotation(tt, rt);', `
 		if(player$1 != undefined && this.id == player$1.id) player$1.sendPositionAndRotation();
 	`);
 
-	// KEY FIX
-	addReplacement('Object.assign(keyMap,_)', '; keyMap["Semicolon"] = "semicolon"; keyMap["Apostrophe"] = "apostrophe";');
+    // KEY FIX
+    addReplacement('Object.assign(keyMap,_)', '; keyMap["Semicolon"] = "semicolon"; keyMap["Apostrophe"] = "apostrophe";');
 
-	// SWING FIX
-	addReplacement('player$1.getActiveItemStack().item instanceof', 'null == ', true);
+    // SWING FIX
+    addReplacement('player$1.getActiveItemStack().item instanceof', 'null == ', true);
 
-	// COMMANDS
-	addReplacement('tryExecuteClientside(et,_))return;', `
+    // COMMANDS
+    addReplacement('tryExecuteClientside(et,_))return;', `
 		const str = $.toLocaleLowerCase();
 		if(str.startsWith(".bind"))
 		{
@@ -439,8 +439,8 @@ function modifyCode(text) {
 		}
 	`)
 
-	// MAIN
-	addReplacement('document.addEventListener("contextmenu",j=>j.preventDefault());', `
+    // MAIN
+    addReplacement('document.addEventListener("contextmenu",j=>j.preventDefault());', `
 		// my code lol
 		(function() {
 			class Module {
@@ -985,100 +985,89 @@ function modifyCode(text) {
 		})();
 	`);
 
-	let loadedConfig = false;
+    let loadedConfig = false;
 
-	async function saveVapeConfig(profile) {
-		if(!loadedConfig) return;
-		let saveList = {};
-		for(const [name, module] of Object.entries(unsafeWindow.globalThis.vapeModules))
-		{
-			saveList[name] = {enabled: module.enabled, bind: module.bind, options: {}};
-			for(const [option, setting] of Object.entries(module.options))
-			{
-				saveList[name].options[option] = setting[1];
-			}
-		}
-		GM_setValue("vapeConfig" + (profile ?? unsafeWindow.globalThis.vapeProfile), JSON.stringify(saveList));
-		GM_setValue("mainVapeConfig", JSON.stringify({profile: unsafeWindow.globalThis.vapeProfile}));
-	}
+    async function saveVapeConfig(profile) {
+        if (!loadedConfig) return;
+        let saveList = {};
+        for (const [name, module] of Object.entries(unsafeWindow.globalThis.vapeModules)) {
+            saveList[name] = { enabled: module.enabled, bind: module.bind, options: {} };
+            for (const [option, setting] of Object.entries(module.options)) {
+                saveList[name].options[option] = setting[1];
+            }
+        }
+        GM_setValue("vapeConfig" + (profile ? ? unsafeWindow.globalThis.vapeProfile), JSON.stringify(saveList));
+        GM_setValue("mainVapeConfig", JSON.stringify({ profile: unsafeWindow.globalThis.vapeProfile }));
+    }
 
-	async function loadVapeConfig(switched) {
-		loadedConfig = false;
-		const loadedMain = JSON.parse(await GM_getValue("mainVapeConfig", "{}")) ?? {profile: "default"};
-		unsafeWindow.globalThis.vapeProfile = switched ?? loadedMain.profile;
-		const loaded = JSON.parse(await GM_getValue("vapeConfig" + unsafeWindow.globalThis.vapeProfile, "{}"));
-		if(!loaded)
-		{
-			loadedConfig = true;
-			return;
-		}
+    async function loadVapeConfig(switched) {
+        loadedConfig = false;
+        const loadedMain = JSON.parse(await GM_getValue("mainVapeConfig", "{}")) ? ? { profile: "default" };
+        unsafeWindow.globalThis.vapeProfile = switched ? ? loadedMain.profile;
+        const loaded = JSON.parse(await GM_getValue("vapeConfig" + unsafeWindow.globalThis.vapeProfile, "{}"));
+        if (!loaded) {
+            loadedConfig = true;
+            return;
+        }
 
-		for(const [name, module] of Object.entries(loaded))
-		{
-			const realModule = unsafeWindow.globalThis.vapeModules[name];
-			if(!realModule) continue;
-			if(realModule.enabled != module.enabled) realModule.toggle();
-			if(realModule.bind != module.bind) realModule.setbind(module.bind);
-			if(module.options)
-			{
-				for(const [option, setting] of Object.entries(module.options))
-				{
-					const realOption = realModule.options[option];
-					if(!realOption) continue;
-					realOption[1] = setting;
-				}
-			}
-		}
-		loadedConfig = true;
-	}
+        for (const [name, module] of Object.entries(loaded)) {
+            const realModule = unsafeWindow.globalThis.vapeModules[name];
+            if (!realModule) continue;
+            if (realModule.enabled != module.enabled) realModule.toggle();
+            if (realModule.bind != module.bind) realModule.setbind(module.bind);
+            if (module.options) {
+                for (const [option, setting] of Object.entries(module.options)) {
+                    const realOption = realModule.options[option];
+                    if (!realOption) continue;
+                    realOption[1] = setting;
+                }
+            }
+        }
+        loadedConfig = true;
+    }
 
-	async function execute(src) {
-		await fetch(src).then(e => e.text()).then(e => modifyCode(e));
-		await new Promise((resolve) => {
-			const loop = setInterval(async function() {
-				if(unsafeWindow.globalThis.vapeModules)
-				{
-					clearInterval(loop);
-					resolve();
-				}
-			}, 10);
-		});
-		unsafeWindow.globalThis.saveVapeConfig = saveVapeConfig;
-		unsafeWindow.globalThis.loadVapeConfig = loadVapeConfig;
-		loadVapeConfig();
-		setInterval(async function() {
-			saveVapeConfig();
-		}, 10000);
-	}
+    async function execute(src) {
+        await fetch(src).then(e => e.text()).then(e => modifyCode(e));
+        await new Promise((resolve) => {
+            const loop = setInterval(async function() {
+                if (unsafeWindow.globalThis.vapeModules) {
+                    clearInterval(loop);
+                    resolve();
+                }
+            }, 10);
+        });
+        unsafeWindow.globalThis.saveVapeConfig = saveVapeConfig;
+        unsafeWindow.globalThis.loadVapeConfig = loadVapeConfig;
+        loadVapeConfig();
+        setInterval(async function() {
+            saveVapeConfig();
+        }, 10000);
+    }
 
-	// https://stackoverflow.com/questions/22141205/intercept-and-alter-a-sites-javascript-using-greasemonkey
-	if(navigator.userAgent.indexOf("Firefox") != -1)
-	{
-		window.addEventListener("beforescriptexecute", function(e) {
-			if(e.target.src.includes("https://miniblox.io/assets/index"))
-			{
-				e.preventDefault();
-				e.stopPropagation();
-				execute(e.target.src);
-			}
-		}, false);
-	}
-	else
-	{
-		new MutationObserver(async (mutations, observer) => {
-			let oldScript = mutations
-				.flatMap(e => [...e.addedNodes])
-				.filter(e => e.tagName == 'SCRIPT')
-				.find(e => e.src.includes("https://miniblox.io/assets/index"));
+    // https://stackoverflow.com/questions/22141205/intercept-and-alter-a-sites-javascript-using-greasemonkey
+    if (navigator.userAgent.indexOf("Firefox") != -1) {
+        window.addEventListener("beforescriptexecute", function(e) {
+            if (e.target.src.includes("https://miniblox.io/assets/index")) {
+                e.preventDefault();
+                e.stopPropagation();
+                execute(e.target.src);
+            }
+        }, false);
+    } else {
+        new MutationObserver(async(mutations, observer) => {
+            let oldScript = mutations
+                .flatMap(e => [...e.addedNodes])
+                .filter(e => e.tagName == 'SCRIPT')
+                .find(e => e.src.includes("https://miniblox.io/assets/index"));
 
-			if (oldScript) {
-				observer.disconnect();
-				oldScript.remove();
-				execute(oldScript.src);
-			}
-		}).observe(document, {
-			childList: true,
-			subtree: true,
-		});
-	}
+            if (oldScript) {
+                observer.disconnect();
+                oldScript.remove();
+                execute(oldScript.src);
+            }
+        }).observe(document, {
+            childList: true,
+            subtree: true,
+        });
+    }
 })();
